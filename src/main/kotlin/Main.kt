@@ -1,29 +1,29 @@
 fun main() {
     println("Bem vindo ao Bytebank")
 
-    val contaAlex = Conta()                  //instancia tipo conta
-    contaAlex.titular = "Alex"
-    contaAlex.numeroConta = 1001
-    contaAlex.setSaldo(2000.0)
+    val contaAlex = Conta(titular = "Alex", numeroConta = 1001)                  //instancia tipo conta
+//    contaAlex.titular = "Alex"
+//    contaAlex.numeroConta = 1001
+    contaAlex.deposita(2000.0)
 
     println(contaAlex.titular)
     println(contaAlex.numeroConta)
-    println(contaAlex.getSaldo())
+    //  println(contaAlex.getSaldo())
 
-    val contaFran = Conta()
-    contaFran.titular = "Fran"
-    contaFran.numeroConta = 1002
-    contaFran.setSaldo(300.0)
+    val contaFran = Conta(titular = "Fran", numeroConta = 1002)
+//    contaFran.titular = "Fran"
+//    contaFran.numeroConta = 1002
+    contaFran.deposita(300.0)
 
     println(contaFran.titular)
     println(contaFran.numeroConta)
-    println(contaFran.getSaldo())
+    //   println(contaFran.getSaldo())
 
     contaAlex.deposita(50.0)
-    println(contaAlex.getSaldo())
+    //   println(contaAlex.getSaldo())
 
     contaAlex.saca(1000.0)
-    println(contaAlex.getSaldo())
+    // println(contaAlex.getSaldo())
     //contaAlex.saca(1100.0)
     //println(contaAlex.saldo)
 
@@ -36,22 +36,33 @@ fun main() {
 
 }
 
-class Conta {                                             //Classe em Kotlin, sempre precisa definir valor para variavel
-    var titular = ""
-    var numeroConta = 0
-    private var saldo = 0.0                   //Encapsulamento de saldo, sendo envolvida no metodo abaixo que devolve uma copia de Saldo.
 
-    fun getSaldo(): Double {
-        return saldo
-    }
+class Conta(
+    var titular: String,
+    val numeroConta: Int
+) {
+    var saldo = 0.0
+        private set
 
-    fun setSaldo(valor: Double) {
-        if (valor > 0){
-         saldo = valor
-        }
-    }
+//class Conta {                                             //Classe em Kotlin, sempre precisa definir valor para variavel
+//    var titular = ""
+//    var numeroConta = 0
+//    var saldo = 0.0
+//        private set                  //Isso é uma PROPERTY em Kotlin
+
+    //    fun getSaldo(): Double {
+//        return saldo
+//    }
+//
+//    fun setSaldo(valor: Double) {              //Não é comum em Kotlin utilizar esta forma com getters e setters como em Java por exemplo
+//        if (valor > 0){
+//         saldo = valor
+//        }
+//    }
     fun deposita(valor: Double) {         //Criamos a função deposita agora dentro da classe Conta.
-        saldo += valor
+        if (valor > 0) {
+            this.saldo += valor
+        }
         //le se this.saldo += valor
     }
     // A função abaixo esta correta, porém não atende os melhores padrões de orientacao a objeto, quem deve gerenciar os comportamentos/funcoes/metodos é a propria classe.
@@ -86,9 +97,9 @@ fun testaCopiasEReferencias() {
     println(numeroInt)
     println(numeroDouble)
 
-    val contaTassya = Conta()
+    val contaTassya = Conta(titular = "Tassya", numeroConta = 1024)
     contaTassya.titular = "Tassya"
-    var contaMateus = Conta()
+    var contaMateus = Conta(titular = "Mateus", numeroConta = 1025)
     contaMateus.titular = "Tassya"
 
     println("titular conta Mateus :  ${contaMateus.titular}")
